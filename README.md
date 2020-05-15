@@ -1,0 +1,2 @@
+# introduction_to_nlp
+研究室B3のための勉強会資料置き場
