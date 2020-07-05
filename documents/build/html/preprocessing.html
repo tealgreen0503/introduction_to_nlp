@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>テキストの前処理 &mdash; Introduction to NLP 1.0.0 ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="特徴量エンジニアリング" href="feature_engineering.html" />
+    <link rel="prev" title="自然言語処理とは" href="whats_nlp.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Introduction to NLP
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whats_nlp.html">自然言語処理とは</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">テキストの前処理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">テキストのクリーニング</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">単語分割</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">ストップワードの除去</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">辞書による方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">出現頻度による方式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">単語の正規化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">文字種の統一</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">数字の置き換え</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engineering.html">特徴量エンジニアリング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine_learning.html">機械学習による分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">おわりに</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Introduction to NLP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>テキストの前処理</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/preprocessing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><a class="toc-backref" href="#id11">テキストの前処理</a><a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>　自然言語処理に前処理は不可欠です．実世界のテキストはたくさんのノイズが含まれているので，そのままでは機械で処理するのは難しいです．特にインターネットで得られるテキストデータはHTMLタグやJavaScriptのコードといったノイズが含まれています．テキスト分類を行う前に，このようなノイズを取り除き，機械で扱えるような形に加工していきましょう．</p>
+<p>　以下のリンクでソースコードを試すことができます．</p>
+<p><a class="reference external" href="https://colab.research.google.com/drive/1dnZiUeq078hh-3_0GsliLc64oXntjI-y?usp=sharing">preprocessing.ipynb</a></p>
+<div class="contents topic" id="id2">
+<p class="topic-title">目次</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id11">テキストの前処理</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id12">テキストのクリーニング</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id13">単語分割</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id14">ストップワードの除去</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id15">辞書による方式</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id16">出現頻度による方式</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id8" id="id17">単語の正規化</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id9" id="id18">文字種の統一</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id19">数字の置き換え</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id12">テキストのクリーニング</a><a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　テキストのクリーニングでは，テキスト中に含まれるノイズを除去します．除去されるノイズとして，HTMLタグやJavaScriptのコードが挙げられます．以下のようなイメージでテキストをクリーニングしていきます．</p>
+<img alt="_images/noise_filter.png" src="_images/noise_filter.png" />
+<p>　PythonでHTMLタグを除去するにはBeautiful Soupやlxmlのようなパッケージが便利です．以下ではBeautiful Soupを使って実際にHTMLタグを除去してみましょう．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 簡単なHTML文書の例</span>
+<span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;html&gt;</span>
+<span class="s2">    &lt;body&gt;</span>
+<span class="s2">        これは&lt;a href=&quot;http://example.com&quot;&gt;Example&lt;/a&gt;です。</span>
+<span class="s2">    &lt;/body&gt;</span>
+<span class="s2">&lt;/html&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;html&gt;
+    &lt;body&gt;
+        これは&lt;a href=&quot;http://example.com&quot;&gt;Example&lt;/a&gt;です。
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>上記のHTML文書をクリーニングしていきます．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>  <span class="c1"># bs4からBeautifulSoupをインポートします</span>
+
+<span class="k">def</span> <span class="nf">clean_html</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>  <span class="c1"># strip=Trueの時，改行を除去します</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>  <span class="c1"># BeautifulSoupのオブジェクトを生成します</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="n">strip</span><span class="p">)</span>  <span class="c1"># soupオブジェクトのget_textを実行します</span>
+    <span class="k">return</span> <span class="n">text</span>
+
+<span class="n">text_cleaned</span> <span class="o">=</span> <span class="n">clean_html</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text_cleaned</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>これはExampleです。
+</pre></div>
+</div>
+<p>　HTMLタグが除去されてきれいになりました．</p>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id13">単語分割</a><a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　自然言語処理をする際によく行われる処理として， <strong>テキストを単語に分割する処理</strong> があります．テキストを単語に分割する理由は，多くの自然言語処理システムでは <strong>入力を単語レベルで扱う</strong> からです．日本語では主に <strong>形態素解析器</strong> を用いて単語の分割を行います．</p>
+<p>　イメージとしては以下のように分割します．</p>
+<img alt="_images/keitaiso_kaiseki.png" src="_images/keitaiso_kaiseki.png" />
+<p>　このようにテキストを形態素ごとに分割する作業を <strong>分かち書き</strong> と言います．自然言語処理では一般的に分かち書きをし，分割された形態素を扱っていきます．</p>
+<p>　ところで上の例では「どうぶつの森」が「どうぶつ」・「の」・「森」に分割されてしまっています．このようにデフォルトの形態素解析では固有名詞や新語を正しく分かち書きできないと言う欠点があります．この問題は，形態素解析器に辞書を使うことである程度解決することができます．辞書は自分で作成できますが，配布されているものを使用すると良いでしょう．以下の例は辞書として <code class="code docutils literal notranslate"><span class="pre">NEologd</span></code> を使って分かち書きをした結果です．</p>
+<img alt="_images/neologd.png" src="_images/neologd.png" />
+<p>　「どうぶつの森」が一つの名詞として認識されていますね．</p>
+<p>　では，分かち書きをPythonで行ってみましょう．形態素解析器は様々なものがありますが，ここでは最も一般的な <code class="code docutils literal notranslate"><span class="pre">MeCab</span></code> を使ってみましょう．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MeCab</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;最近、世間ではどうぶつの森が流行っていますね。&quot;</span>
+
+<span class="n">mecab_tagger</span> <span class="o">=</span> <span class="n">MeCab</span><span class="o">.</span><span class="n">Tagger</span><span class="p">()</span>
+<span class="n">text_tokenized</span> <span class="o">=</span> <span class="n">mecab_tagger</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="c1"># 形態素解析をする</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">text_tokenized</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>最近  名詞,副詞可能,*,*,*,*,最近,サイキン,サイキン
+、   記号,読点,*,*,*,*,、,、,、
+世間  名詞,一般,*,*,*,*,世間,セケン,セケン
+で   助詞,格助詞,一般,*,*,*,で,デ,デ
+は   助詞,係助詞,*,*,*,*,は,ハ,ワ
+どう  副詞,助詞類接続,*,*,*,*,どう,ドウ,ドー
+ぶつ  名詞,一般,*,*,*,*,ぶつ,ブツ,ブツ
+の   助詞,連体化,*,*,*,*,の,ノ,ノ
+森   名詞,一般,*,*,*,*,森,モリ,モリ
+が   助詞,格助詞,一般,*,*,*,が,ガ,ガ
+流行っ 動詞,自立,*,*,五段・ラ行,連用タ接続,流行る,ハヤッ,ハヤッ
+て   助詞,接続助詞,*,*,*,*,て,テ,テ
+い   動詞,非自立,*,*,一段,連用形,いる,イ,イ
+ます  助動詞,*,*,*,特殊・マス,基本形,ます,マス,マス
+ね   助詞,終助詞,*,*,*,*,ね,ネ,ネ
+。   記号,句点,*,*,*,*,。,。,。
+EOS
+</pre></div>
+</div>
+<p>上の例ではテキストを単語に分割しただけでなく，品詞などの情報も得られました．多くの場合では分かち書きさえできれば十分です．分かち書きをするためには <code class="code docutils literal notranslate"><span class="pre">MeCab.Tagger()</span></code> にオプションとして <code class="code docutils literal notranslate"><span class="pre">&quot;-Owakati&quot;</span></code> 入れてください．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mecab_tagger</span> <span class="o">=</span> <span class="n">MeCab</span><span class="o">.</span><span class="n">Tagger</span><span class="p">(</span><span class="s2">&quot;-Owakati&quot;</span><span class="p">)</span>  <span class="c1"># 分かち書きをする</span>
+<span class="n">text_tokenized</span> <span class="o">=</span> <span class="n">mecab_tagger</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">text_tokenized</span> <span class="o">=</span> <span class="n">text_tokenized</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>  <span class="c1"># スペースで区切ったリストに変換</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">text_tokenized</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;最近&#39;</span><span class="p">,</span> <span class="s1">&#39;、&#39;</span><span class="p">,</span> <span class="s1">&#39;世間&#39;</span><span class="p">,</span> <span class="s1">&#39;で&#39;</span><span class="p">,</span> <span class="s1">&#39;は&#39;</span><span class="p">,</span> <span class="s1">&#39;どう&#39;</span><span class="p">,</span> <span class="s1">&#39;ぶつ&#39;</span><span class="p">,</span> <span class="s1">&#39;の&#39;</span><span class="p">,</span> <span class="s1">&#39;森&#39;</span><span class="p">,</span> <span class="s1">&#39;が&#39;</span><span class="p">,</span> <span class="s1">&#39;流行っ&#39;</span><span class="p">,</span> <span class="s1">&#39;て&#39;</span><span class="p">,</span> <span class="s1">&#39;い&#39;</span><span class="p">,</span> <span class="s1">&#39;ます&#39;</span><span class="p">,</span> <span class="s1">&#39;ね&#39;</span><span class="p">,</span> <span class="s1">&#39;。&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>　分かち書きをすることができました．しかし，「どうぶつの森」が正しく分かち書きできていません．（「どうぶつ」すら「どう」「ぶつ」になってしまっています．）正しく分かち書きをするためにNEologdの辞書を追加しましょう．追加するには <code class="code docutils literal notranslate"><span class="pre">MeCab.Tagger()</span></code> のオプションに（今回の環境の場合は） <code class="code docutils literal notranslate"><span class="pre">&quot;-d</span> <span class="pre">/usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd&quot;</span></code> を追加しましょう．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mecab_tagger</span> <span class="o">=</span> <span class="n">MeCab</span><span class="o">.</span><span class="n">Tagger</span><span class="p">(</span>
+    <span class="s2">&quot;-Owakati -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd&quot;</span><span class="p">)</span>  <span class="c1"># 辞書を追加する</span>
+<span class="n">text_tokenized</span> <span class="o">=</span> <span class="n">mecab_tagger</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">text_tokenized</span> <span class="o">=</span> <span class="n">text_tokenized</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">text_tokenized</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;最近&#39;</span><span class="p">,</span> <span class="s1">&#39;、&#39;</span><span class="p">,</span> <span class="s1">&#39;世間&#39;</span><span class="p">,</span> <span class="s1">&#39;で&#39;</span><span class="p">,</span> <span class="s1">&#39;は&#39;</span><span class="p">,</span> <span class="s1">&#39;どうぶつの森&#39;</span><span class="p">,</span> <span class="s1">&#39;が&#39;</span><span class="p">,</span> <span class="s1">&#39;流行っ&#39;</span><span class="p">,</span> <span class="s1">&#39;て&#39;</span><span class="p">,</span> <span class="s1">&#39;い&#39;</span><span class="p">,</span> <span class="s1">&#39;ます&#39;</span><span class="p">,</span> <span class="s1">&#39;ね&#39;</span><span class="p">,</span> <span class="s1">&#39;。&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>　固有名詞も正しく分かち書きすることができました．試しに他の文章も分かち書きしてみてください．NEologdは頻繁に更新されているので，ほとんどの固有名詞を正しく分かち書きできるはずです．</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>実は，このような日本語文法の形態素解析を利用した分かち書きは，最近の機械学習の分野であまり使われていません．それは「日本語の文法の分割方法が，システムとって必ずしも適切とは限らない」という理由からです．</p>
+<p>例えば，「おはようございます」という文章を考えてみましょう．辞書にもよりますがデフォルトのMeCabでは「おはよう / ござい / ます」というふうに分割されるはずです．ですが，「おはようございます」のような一般的な単語をわざわざ3つの形態素に分解する必要はあるでしょうか？そもそも「ござい」という単語は「〜ございます」という文脈以外では滅多に使われません．であるならば「おはようございます」という単語は，そのまま1語として扱うか「おはよう / ございます」のように分割することが合理的でしょう．</p>
+<p>このような問題に対して，システムによって適切な分割方法を自動的に学習する手法として <code class="code docutils literal notranslate"><span class="pre">SentencePiece</span></code> があります．興味がある方は是非調べてみてください．</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id14">ストップワードの除去</a><a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　ストップワードというのは自然言語処理をする際に，一般的で役に立たないなどの理由で <strong>処理対象外</strong> とする単語のことです．例えば，助詞や助動詞などの機能語（「は」「の」「です」「ます」など）が挙げられます．これらの単語は出現頻度が高い割に役に立たず，計算量や性能に悪影響を及ぼすため前処理で除去しておきます．</p>
+<p>　ストップワードの除去には様々な方式がありますが，ここでは以下の2つの方式を紹介します．</p>
+<ul class="simple">
+<li><p>辞書による方式</p></li>
+<li><p>出現頻度による方式</p></li>
+</ul>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id15">辞書による方式</a><a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>　辞書による方式では，あらかじめストップワードを定義しておき，所内に含まれる単語をテキストから除去します．自分で作成してもいいですが，すでに定義済みの辞書が存在します．ここでは日本語のストップワード辞書の一つであるSlothlibの中身を見てみましょう．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="n">slothlib_path</span> <span class="o">=</span> <span class="s1">&#39;http://svn.sourceforge.jp/svnroot/slothlib/CSharp/Version1/SlothLib/NLP/Filter/StopWord/word/Japanese.txt&#39;</span>
+<span class="n">slothlib_file</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">slothlib_path</span><span class="p">)</span>  <span class="c1"># URLを開く</span>
+<span class="n">slothlib_stopwords</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">slothlib_file</span><span class="p">]</span>  <span class="c1"># ストップワードをリストに格納</span>
+<span class="n">slothlib_stopwords</span> <span class="o">=</span> <span class="p">[</span><span class="n">ss</span> <span class="k">for</span> <span class="n">ss</span> <span class="ow">in</span> <span class="n">slothlib_stopwords</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">ss</span><span class="o">==</span><span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">]</span>  <span class="c1"># 空行を削除</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;単語数:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">slothlib_stopwords</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ss</span> <span class="ow">in</span> <span class="n">slothlib_stopwords</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>単語数: 310
+あそこ
+あたり
+あちら
+あっち
+あと
+あな
+あなた
+あれ
+いくつ
+いつ
+...
+</pre></div>
+</div>
+<p>　このストップワードリストを使って，実際のテキストからストップワードを除去してみましょう．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">slothlib_stopwords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">slothlib_stopwords</span><span class="p">)</span>  <span class="c1"># listをsetに変換（こちらの方が動作が早い）</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;この前どうぶつの森を買いに行きました。&quot;</span>
+<span class="n">text_tokenized</span> <span class="o">=</span> <span class="n">mecab_tagger</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">text_tokenized</span> <span class="o">=</span> <span class="n">text_tokenized</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">remove_stopwords</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">stop_words</span><span class="p">):</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">words</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;除去前:&quot;</span><span class="p">,</span> <span class="n">text_tokenized</span><span class="p">)</span>
+<span class="n">text_filtered</span> <span class="o">=</span> <span class="n">remove_stopwords</span><span class="p">(</span><span class="n">text_tokenized</span><span class="p">,</span> <span class="n">slothlib_stopwords</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;除去後:&quot;</span><span class="p">,</span> <span class="n">text_filtered</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>除去前: [&#39;つい&#39;, &#39;この&#39;, &#39;前&#39;, &#39;どうぶつの森&#39;, &#39;を&#39;, &#39;買い&#39;, &#39;に&#39;, &#39;行き&#39;, &#39;まし&#39;, &#39;た&#39;, &#39;。&#39;]
+除去後: [&#39;つい&#39;, &#39;この&#39;, &#39;どうぶつの森&#39;, &#39;を&#39;, &#39;買い&#39;, &#39;に&#39;, &#39;行き&#39;, &#39;た&#39;, &#39;。&#39;]
+</pre></div>
+</div>
+<p>　ストップワードが除去されていることが確認できますね．</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>辞書によるストップワードの除去が，必ずしも私たちの目的に対して良い影響を及ぼすとは限らないことに注意してください．例えば，Slothlibのストップワードの辞書には「楽」「喜」「怒」「哀」が含まれています．これらが必ずしも不要な語であるかは議論の余地がありそうです．</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id16">出現頻度による方式</a><a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>　出現頻度による方式では，テキスト内の <strong>単語頻度</strong> をカウントし， <strong>高頻度（時には定頻度）</strong> の単語をテキストから除去します．高頻度の単語を除去するのは，それらの単語がテキスト中で占める割合が高い一方，役に立たないからです．以下の図はある英語の本の最も頻出する50単語の累計頻度をプロットしたものです．</p>
+<a class="reference internal image-reference" href="_images/words_frequency.png"><img alt="_images/words_frequency.png" src="_images/words_frequency.png" style="width: 700.0px; height: 420.0px;" /></a>
+<p>　プロットされている50単語を見てみると，theやof，カンマのようなテキスト分類などに役にたたなさそうな単語がテキストの50%を締めていることがわかります．出現頻度による方式ではこれら高頻度をストップワードとして取り除きます．</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id17">単語の正規化</a><a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>単語の正規化では，単語の文字種の統一，綴りや表記揺れの吸収といった， <strong>単語を置き換える処理</strong> をします．この処理を行うことで，全角の「ネコ」と半角の「ﾈｺ」を同じ単語として処理できるようになります．</p>
+<p>　単語の正規化には様々な処理がありますが，この記事では以下の2つの処理を紹介します．</p>
+<ul class="simple">
+<li><p>文字種の統一</p></li>
+<li><p>数字の置き換え</p></li>
+</ul>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id18">文字種の統一</a><a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>　文字種の統一ではアルファベットの大文字を小文字に変換する，半角文字を全角文字に変換すrといった処理を行います．ここでは <strong>小文字化</strong> の処理を行ってみましょう．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;President Obama is speaking at the White House.&quot;</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>president obama is speaking at the white house.
+</pre></div>
+</div>
+<p>　全ての文字が小文字に統一されました．</p>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id19">数字の置き換え</a><a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>　数字の置き換えでは，テキスト中に出現する筋を別の記号（例えば0）に置き換えます．例えば「2020年1月1日」という文字列は「0年0月0日」となります．</p>
+<p>　数字の置き換えを行う理由は，数値表現が多様で出現頻度が高い割には自然言語処理のタスクに役に立たないことが多いからです．例えば，ニュース記事を「スポーツ」や「政治」のようなカテゴリに分類するタスクを考えましょう．この時，記事中には多様な数字表現が出現するでしょうが，カテゴリの分類にはほとんど役に立たないと考えられます．</p>
+<p>　Pythonでの実装は正規表現モジュールを使うことでできます． <code class="code docutils literal notranslate"><span class="pre">re.sub</span></code> 関数を使って数値を置き換えます．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">normalize_number</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">replaced_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\d+&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>　　<span class="c1"># \d+は1つ以上の連続した数値を表します．</span>
+    <span class="k">return</span> <span class="n">replaced_text</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;2万0689・24ドル&quot;</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">normalize_number</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0万0・0ドル
+</pre></div>
+</div>
+<p>　数字が全て0に置き換わりました．</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>　テキストの前処理は以上で紹介したものの他にもたくさんの種類があり，タスクによって最適なものが違います．その他の前処理は以下のサイト等を参考にしてください．</p>
+<p><a class="reference external" href="http://yukinoi.hatenablog.com/entry/2018/05/29/120000">http://yukinoi.hatenablog.com/entry/2018/05/29/120000</a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="feature_engineering.html" class="btn btn-neutral float-right" title="特徴量エンジニアリング" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="whats_nlp.html" class="btn btn-neutral float-left" title="自然言語処理とは" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kengo Shimizu
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

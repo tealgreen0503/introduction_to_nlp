@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>特徴量エンジニアリング &mdash; Introduction to NLP 1.0.0 ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="機械学習による分類" href="machine_learning.html" />
+    <link rel="prev" title="テキストの前処理" href="preprocessing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Introduction to NLP
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whats_nlp.html">自然言語処理とは</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">テキストの前処理</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">特徴量エンジニアリング</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">特徴量エンジニアリングとは？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bag-of-words-bow">Bag of Words (BoW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tfidf">tf–idf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#n-gram">n-gram</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="machine_learning.html">機械学習による分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">おわりに</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Introduction to NLP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>特徴量エンジニアリング</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/feature_engineering.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><a class="toc-backref" href="#id4">特徴量エンジニアリング</a><a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>　本章では特徴量エンジニアリングについて説明します．</p>
+<p>　以下のリンクでソースコードを試すことができます．</p>
+<p><a class="reference external" href="https://colab.research.google.com/drive/15hQZ2f8QVLTmC6cU81OuMZ2dxmpahpFM?usp=sharing">feature_engineering.ipynb</a></p>
+<div class="contents topic" id="id2">
+<p class="topic-title">目次</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id4">特徴量エンジニアリング</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id5">特徴量エンジニアリングとは？</a></p></li>
+<li><p><a class="reference internal" href="#bag-of-words-bow" id="id6">Bag of Words (BoW)</a></p></li>
+<li><p><a class="reference internal" href="#tfidf" id="id7">tf–idf</a></p></li>
+<li><p><a class="reference internal" href="#n-gram" id="id8">n-gram</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id5">特徴量エンジニアリングとは？</a><a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　<strong>特徴量エンジニアリング</strong> とは， <strong>機械学習アルゴリズムの性能が高くなるような特徴（feature）を生データから作成するプロセス</strong> のことです．特徴量エンジニアリングは機械学習を使ったシステムを作る際の基礎であり，ここで良い特徴量を得られれば，良い性能を出すことができます．</p>
+<p>　特徴量エンジニアリングは自然言語処理をする場合だけだけでなく，どのタイプのデータに対する機械学習でも行われるものです．しかし，扱うデータのタイプにより，適切な特徴量エンジニアリングの手法は異なり，さらに同じタイプのデータに対しても，そのデータの特色により様々な手法の特徴量エンジニアリングが考えられます．</p>
+<p>　今回は，多種多様な特徴量エンジニアリングの手法の中でも，自然言語処理における代表的な特徴量エンジニアリングの手法を紹介していきます．</p>
+</div>
+<div class="section" id="bag-of-words-bow">
+<h2><a class="toc-backref" href="#id6">Bag of Words (BoW)</a><a class="headerlink" href="#bag-of-words-bow" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　前の章ではテキストデータに前処理を施しましたが，ただテキストデータを前処理しただけでは，それはただのトークンの羅列です．トークンの羅列をシステムが扱えるように表現する，つまり特徴量エンジニアリングを施していきましょう．</p>
+<p>　最も単純なテキストデータの表現手法として <strong>Bag of Words(BoW)</strong> が挙げられます．BoWは，テキストの中の <strong>それぞれの単語が現れる回数</strong> を数えるだけの手法です．単語の出現頻度を数えることで，それぞれのテキストを数値の集まりとして表現，つまり <strong>ベクトル</strong> として表現します．</p>
+<p>　簡単な例として，&quot;when in Rome, do as the Romans do&quot; と &quot;all roads lead to Rome&quot; の2つの英文を考えてみましょう．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;when in Rome, do as the Romans do.&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;all roads lead to Rome.&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>　BoWはシンプルなので自力で実装もできそうですが，Pythonのライブラリの一つである <code class="code docutils literal notranslate"><span class="pre">scikit-learn</span></code> の <code class="code docutils literal notranslate"><span class="pre">CountVectorizer</span></code> を使えば簡単に実装できます．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">count_vec</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+<span class="n">count_vec</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>　BoWに限らず，テキストデータをベクトル化するにはまず，コーパス全体に含まれる単語にそれぞれ番号を割り当てた <strong>Vocaburary</strong> （辞書）が必要です．上のコードで <code class="code docutils literal notranslate"><span class="pre">CountVectorizer</span></code> の <code class="code docutils literal notranslate"><span class="pre">fit</span></code> メソッドにコーパスを渡すことでVcaburaryを作成しています．Vocaburaryは <code class="code docutils literal notranslate"><span class="pre">vocabulary_</span></code> 属性で確認できます．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vocabulary size: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">count_vec</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vocabulary content:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count_vec</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Vocabulary</span> <span class="n">size</span><span class="p">:</span> <span class="mi">11</span>
+<span class="n">Vocabulary</span> <span class="n">content</span><span class="p">:</span>
+<span class="p">{</span><span class="s1">&#39;when&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;in&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;rome&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;do&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;as&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;romans&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;roads&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;lead&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>　では，BoWによってベクトル化された2つのデータを見てみましょう．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bag_of_words</span> <span class="o">=</span> <span class="n">count_vec</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">bag_of_words</span> <span class="o">=</span> <span class="n">bag_of_words</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;-&gt;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">bag_of_words</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;-&gt;</span><span class="se">\t\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">bag_of_words</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>when in Rome, do as the Romans do. -&gt;   [0 1 2 1 0 0 1 1 1 0 1]
+all roads lead to Rome. -&gt;              [1 0 0 0 1 1 0 1 0 1 0]
+</pre></div>
+</div>
+<p>　このようにして，2つのテキストをBoWを用いてベクトル化することができました．2つのベクトルが似たような数値になっていれば，その2つのテキストの中には共通する単語が登場することを表しており，2つのテキストは似たような意味を持つと（ある程度は）考えられそうです．Vocaburaryを参照すれば元の文を復元できます．</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Vocaburaryを参照すればBoWを元の文に復元できますが，語順は元の文と同じには戻りません．このように，BoWは単語の並び順を全く考慮できていない点に注意しましょう．</p>
+</div>
+<p>　ところで，&quot;I&quot;，&quot;you&quot;，&quot;the&quot;などの一般的な単語はどの文にも多く登場しそうです．これらの単語が多く登場すれば，その単語ばかりが重視されることになり，私たちの意図する分析結果に悪い影響を与えそうです．ストップワードを用いて除去してもいいですが，ここででは，重要でない情報を削ぎ落とすのではなく，どの単語がどの程度情報を持っていそうかに応じて重み付けをしていく手法を試してみましょう．</p>
+</div>
+<div class="section" id="tfidf">
+<h2><a class="toc-backref" href="#id7">tf–idf</a><a class="headerlink" href="#tfidf" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　単純なBoWの欠点を軽減する手法として， <strong>tf-idf</strong> （term frequency–inverse document frequency）があります．tf-idfとは，直観的に説明すると、特定の文書にだけ頻繁に現れる単語に大きな重みを与え、コーパス中の多数の文書に現れる単語にはあまり重みを与えない手法，ということになります．特定の文書にだけ頻出し、他の文書にはあまり現れない単語は、その文書の内容をよく示しているのではないか，という発想です．数式で表すと以下のようになります．</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\mathrm{tfidf}(t,d)=\mathrm{tf}(t,d)×\mathrm{idf}(t)\\\mathrm{idf}(t)=\log\left(\frac{N}{1+\mathrm{df}(t)}\right)\end{aligned}\end{align} \]</div>
+<p>　難しそうな数式が出てきましたが，順に説明しましょう．</p>
+<p>　まず， <span class="math notranslate nohighlight">\(\mathrm{tf}(t,d)\)</span> は文 <span class="math notranslate nohighlight">\(d\)</span> における単語 <span class="math notranslate nohighlight">\(t\)</span> の出現頻度を表しています．つまりデフォルトのBoWと同じです．</p>
+<p>　tf-idfの重要な部分は <span class="math notranslate nohighlight">\(\mathrm{idf}(t)\)</span> の部分です．上の式の <span class="math notranslate nohighlight">\(N\)</span> はコーパスの中の全文数です．この値はどの単語に関わらず定数（今回の場合は2）ですから，重要な部分は <span class="math notranslate nohighlight">\(\mathrm{df}(t)\)</span> の方です．<span class="math notranslate nohighlight">\(\mathrm{df}(t)\)</span> は <strong>単語</strong> <span class="math notranslate nohighlight">\(t\)</span>  <strong>が現れる文の数</strong> （document frequency）です．例えば&quot;the&quot;のような一般的な語句の場合，多くの文に登場するので，値が大きくなるはずです．そしてその <span class="math notranslate nohighlight">\(\mathrm{df}(t)\)</span> が分母にあるので&quot;the&quot;という単語に対する <span class="math notranslate nohighlight">\(\mathrm{idf}(t)\)</span> の値（そして <span class="math notranslate nohighlight">\(\mathrm{tfidf}(t,d)\)</span> の値）は相対的に小さくなるはずです．</p>
+<p>　このようにして，一般的な語句に対してはtf-idfの値は小さく，反対にその文特有の語句に対してはtf-idfの値は大きくなります．</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><span class="math notranslate nohighlight">\(\mathrm{idf}(t,d)\)</span> の分母に+1があるのは，分母が0で割られるのを防ぐためです． <span class="math notranslate nohighlight">\(\log\)</span> に関してはあまり気にないでください．</p>
+<p>また，tf-idfにはこれの他にも様々な計算方法があります．</p>
+</div>
+<p>　ではPythonでtf-idfを実装してみましょう．tf-idfは， <code class="code docutils literal notranslate"><span class="pre">CountVectorizer</span></code> の代わりに <code class="code docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> を使えば得ることができます．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+
+<span class="n">tfidf_vec</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">tfidf_vec</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>　tf-idfによってベクトル化された2つのデータを見てみましょう．また，ここでは <code class="code docutils literal notranslate"><span class="pre">Pandas</span></code> を利用して単語ごとの数値をわかりやすくしてみましょう．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">vocab</span> <span class="o">=</span> <span class="n">tfidf_vec</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">vocab</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/tfidf.png" src="_images/tfidf.png" />
+<p>　&quot;rome&quot;の数値を見てみましょう．&quot;rome&quot;は両方の文に共通して登場するので，tf-idfの値は他の単語と比べて，小さくなっています．また&quot;do&quot;に関しては，片方の文にしか登場せず，かつ1つ目の文には2回登場しているので，値が大きくなっています．この&quot;do&quot;は1つ目の文を表す単語として，大きな影響を与えていそうです．</p>
+</div>
+<div class="section" id="n-gram">
+<h2><a class="toc-backref" href="#id8">n-gram</a><a class="headerlink" href="#n-gram" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　BoWの欠点は単語の順番の情報が完全に失われてしまうことです．このため正反対の意味を持つ &quot;it's bad, not good at all&quot; と &quot;it's good, not bad at all&quot; が全く同じ表現になってしまいます．このBoWの欠点を補う手法として <strong>n-gram</strong> が挙げられます．</p>
+<p>　n-gram では任意の数 <span class="math notranslate nohighlight">\(n\)</span> 個の連続するトークンを人まとまりとして考えます．一般に <span class="math notranslate nohighlight">\(n=2\)</span> のとき <strong>バイグラム（bigram）</strong> <span class="math notranslate nohighlight">\(n=3\)</span> のとき <strong>トリグラム（trigram）</strong> と呼びます．</p>
+<p>　Pythonでn-gramを再現するには <code class="code docutils literal notranslate"><span class="pre">CountVectorizer</span></code> や <code class="code docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> の <code class="code docutils literal notranslate"><span class="pre">ngram_range</span></code> パラメータを設定します．</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">count_vec</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># bigramのとき</span>
+<span class="n">count_vec</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vocabulary size: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">count_vec</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vocabulary content:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count_vec</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">))</span>
+
+<span class="n">bi_gram</span> <span class="o">=</span> <span class="n">count_vec</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">bi_gram</span> <span class="o">=</span> <span class="n">bi_gram</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;-&gt;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">bi_gram</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;-&gt;</span><span class="se">\t\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">bi_gram</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Vocabulary size: 11
+Vocabulary content:
+{&#39;when in&#39;: 10, &#39;in rome&#39;: 3, &#39;rome do&#39;: 7, &#39;do as&#39;: 2, &#39;as the&#39;: 1, &#39;the romans&#39;: 8, &#39;romans do&#39;: 6, &#39;all roads&#39;: 0, &#39;roads lead&#39;: 5, &#39;lead to&#39;: 4, &#39;to rome&#39;: 9}
+
+when in Rome, do as the Romans do. -&gt;    [0 1 1 1 0 0 1 1 1 0 1]
+all roads lead to Rome. -&gt;               [1 0 0 0 1 1 0 0 0 1 0]
+</pre></div>
+</div>
+<p>　2つの文章に共通のトークンは登場しなくなりました．今回は語彙数が変化していませんが，一般的にn-gramを利用すると語彙数が爆発的に増加することが知られています．</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="machine_learning.html" class="btn btn-neutral float-right" title="機械学習による分類" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="preprocessing.html" class="btn btn-neutral float-left" title="テキストの前処理" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kengo Shimizu
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>機械学習による分類 &mdash; Introduction to NLP 1.0.0 ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="おわりに" href="conclusion.html" />
+    <link rel="prev" title="特徴量エンジニアリング" href="feature_engineering.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Introduction to NLP
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whats_nlp.html">自然言語処理とは</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">テキストの前処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engineering.html">特徴量エンジニアリング</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">機械学習による分類</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">ロジスティック回帰</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">おわりに</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Introduction to NLP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>機械学習による分類</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/machine_learning.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><a class="toc-backref" href="#id4">機械学習による分類</a><a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>　前々章では，テキストデータに対して前処理を施しました．前章ではテキストデータを機械学習で扱えるようにベクトルに変換しました．本章ではいよいよ機械学習を用いてテキストを分類していきます．今回は機械学習モデルの一つである <strong>ロジスティック回帰</strong> を用いてテキスト分類を行なっていきます．「回帰」という単語が含まれていますが，分類のためのモデルであることに注意してください．</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>本レクチャーは2020年度菊池研究室新歓合宿のB3向けレクチャーのうちの一つです．同じ年の他のレクチャーで機械学習に関するものがあるため，本レクチャーで機械学習に関する詳しい説明は行いません．</p>
+</div>
+<div class="contents topic" id="id2">
+<p class="topic-title">目次</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id4">機械学習による分類</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id5">ロジスティック回帰</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id5">ロジスティック回帰</a><a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　本節では，ロジスティック回帰がどのようなモデルなのかについて説明します．繰り返しになりますが，ロジスティック回帰は分類のためのモデルです．よってここでは簡単な2値分類の問題を例としてとりあげましょう．</p>
+<p>　りんごとみかんを分類する問題を考えます．各軸は果物の色と大きさを表すものとします．便宜上， <span class="math notranslate nohighlight">\(x_1\)</span> を色，<span class="math notranslate nohighlight">\(x_2\)</span> を大きさとしておきます．このような設定でデータを描画したのが以下のグラフです．（赤い点がりんご，オレンジの点がみかんです．）</p>
+<a class="reference internal image-reference" href="_images/graph1.png"><img alt="_images/graph1.png" src="_images/graph1.png" style="width: 372.0px; height: 357.0px;" /></a>
+<p>　分類問題は線を引いて空間を切る問題と考えることができます．その際の切り方には色々と考えられますが，ここでは直線で切ることにします．その直線を <span class="math notranslate nohighlight">\(x_2=ax_1+b\)</span> としましょう．</p>
+<a class="reference internal image-reference" href="_images/graph2.png"><img alt="_images/graph2.png" src="_images/graph2.png" style="width: 483.0px; height: 357.0px;" /></a>
+<p>　直線 <span class="math notranslate nohighlight">\(x_2=ax_1+b\)</span> で空間を切ることで2つの領域ができました．各領域はりんごとみかんの領域であり，数式を使って表すことができます．直線より上の領域は  <span class="math notranslate nohighlight">\(x_2≧ax_1+b\)</span> ，下の領域は <span class="math notranslate nohighlight">\(x_2&lt;ax_1+b\)</span> で表すことができます．</p>
+<p>　このような直線を求めることができれば，新しい未知な <span class="math notranslate nohighlight">\((x_{1_i}, x_{2_i})\)</span> に対して分類を予測できるようになりますね．</p>
+<p>　以上の話を定式化しましょう．そのために，りんごを1，みかんに0を割り当てておきます．分類結果を <span class="math notranslate nohighlight">\(y\)</span> とすると，分類は以下のように定式化できます．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}y=\left\{
+    \begin{array}{}
+        1 &amp; (x_2-ax_1-b≧0)\\
+        0 &amp; (x_2-ax_1-b&lt;0)
+    \end{array}
+\right.\end{split}\]</div>
+<p>　右辺の項を左辺に移行していることに注意してください．</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>今回は変数が2つの場合を考えました．扱う特徴量にもよりますが，BoWの場合はこの変数 <span class="math notranslate nohighlight">\(x\)</span> がVocaburaryの数だけ存在することになります．</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ロジスティック回帰の説明はここまでにしておきます．分類するための直線をどのように得るのか，などについては以下の資料等を参考にしてください．ここでは，ロジスティック回帰とは線形に分類するモデルである，ということだけを知っておいてください．</p>
+<ul class="simple">
+<li><p>中山光樹，『機械学習・深層学習による自然言語処理入門 scikit-learnとTensorFlowを使った実践プログラミング』，マイナビ出版</p></li>
+</ul>
+</div>
+<p>　以下のリンクにソースコードを用意しています．これまでの知識を利用して実際のテキスト分類タスクに取り組んでみましょう．</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="conclusion.html" class="btn btn-neutral float-right" title="おわりに" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="feature_engineering.html" class="btn btn-neutral float-left" title="特徴量エンジニアリング" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kengo Shimizu
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

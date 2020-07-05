@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>自然言語処理入門 &mdash; Introduction to NLP 1.0.0 ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="はじめに" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> Introduction to NLP
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whats_nlp.html">自然言語処理とは</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">テキストの前処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engineering.html">特徴量エンジニアリング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine_learning.html">機械学習による分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">おわりに</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Introduction to NLP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>自然言語処理入門</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>自然言語処理入門<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このページは早稲田大学人間科学部菊池英明研究室における学部三年生向けの自然言語処理入門の資料です．</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#id3">本ページについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#id4">誰のためのレクチャーか</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#id5">誰のためのレクチャーでないか</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#id6">出典</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="whats_nlp.html">自然言語処理とは</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="whats_nlp.html#id3">自然言語処理とは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whats_nlp.html#id4">本レクチャーの目標</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">テキストの前処理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#id3">テキストのクリーニング</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#id4">単語分割</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#id5">ストップワードの除去</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#id8">単語の正規化</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engineering.html">特徴量エンジニアリング</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature_engineering.html#id3">特徴量エンジニアリングとは？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engineering.html#bag-of-words-bow">Bag of Words (BoW)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engineering.html#tfidf">tf–idf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_engineering.html#n-gram">n-gram</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="machine_learning.html">機械学習による分類</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="machine_learning.html#id3">ロジスティック回帰</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">おわりに</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="introduction.html" class="btn btn-neutral float-right" title="はじめに" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kengo Shimizu
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

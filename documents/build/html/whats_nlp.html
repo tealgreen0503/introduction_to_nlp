@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>自然言語処理とは &mdash; Introduction to NLP 1.0.0 ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="テキストの前処理" href="preprocessing.html" />
+    <link rel="prev" title="はじめに" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Introduction to NLP
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">はじめに</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">自然言語処理とは</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">自然言語処理とは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">本レクチャーの目標</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">テキストの前処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_engineering.html">特徴量エンジニアリング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine_learning.html">機械学習による分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">おわりに</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Introduction to NLP</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>自然言語処理とは</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/whats_nlp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><a class="toc-backref" href="#id5">自然言語処理とは</a><a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>　このページでは自然言語処理の概要ついて説明します．</p>
+<div class="contents topic" id="id2">
+<p class="topic-title">目次</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id5">自然言語処理とは</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id6">自然言語処理とは</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id7">本レクチャーの目標</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id6">自然言語処理とは</a><a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　英語や日本語などの，私たちが普段使っている言語を <strong>自然言語</strong> と言います． <strong>自然言語処理</strong> とは，文字通り解釈すると「自然言語を処理する分野」ということになります．これはわかりやすく言うと，「私たちの言葉をコンピュータに理解させるための技術（分野）」となります．つまり，自然言語処理の目標とすることは，人の話す言葉をコンピュータに理解させ，私たちにとって役に立つことをコンピュータに行わせることにあります．</p>
+<p>　この「私たちにとって役立つこと」とは例えばどんなものがあるでしょうか？以下に例挙げてみます．</p>
+<ul class="simple">
+<li><p>自動翻訳</p></li>
+<li><p>質問応答</p></li>
+<li><p>意味解析</p></li>
+<li><p>テキスト分類</p></li>
+<li><p>情報検索</p></li>
+<li><p>対話システム</p></li>
+<li><p>etc.</p></li>
+</ul>
+<p>　この自動翻訳は「Google翻訳」が最たる例でしょう．もちろんGoogle翻訳には最新の自然言語処理技術が使われています．Google翻訳の進化により，私たちは知らない言語でもその意味を理解することができるようになりました．</p>
+<p>　この中でも，本レクチャーでは「テキスト分類」に焦点を当てることにします．テキスト分類とは，ある文章をそのトピックごとに自動的に分類する技術を指します．例えば，ニュース記事を政治・芸能・スポーツ…のようにジャンル別に自動的に分類をします．</p>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id7">本レクチャーの目標</a><a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>　本レクチャーでは「Amazon Customer Reviews Dataset」を用いて，それぞれのレビューを評価ごとに分類することを最終的な目標とします．目標達成のために必要な工程を以下に列挙します．</p>
+<ol class="arabic simple">
+<li><p>コーパスの準備（本レクチャーでは省略）</p></li>
+<li><p>テキストの前処理</p></li>
+<li><p>特徴量エンジニアリング</p></li>
+<li><p>機械学習による分類</p></li>
+</ol>
+<p>　次の章からそれぞれの項目について順番に説明していきます．</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="preprocessing.html" class="btn btn-neutral float-right" title="テキストの前処理" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral float-left" title="はじめに" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kengo Shimizu
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
